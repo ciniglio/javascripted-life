@@ -54,3 +54,36 @@
     }
     window.AddRule(conway);
 })(window);
+
+(function (window, undefined){
+    var seeds = function(oldboard, newboard){
+        for (var i = 0; i < oldboard.x; i++){
+            for (var j = 0; j < oldboard.y; j++){
+                var neighbors = oldboard.neighbors(i,j);
+                if (oldboard.get(i,j)) {
+                    newboard.kill(i,j);
+                } else if (neighbors == 2){
+                    newboard.birth(i,j);
+                }
+            }
+        }
+    };
+    window.AddRule(seeds);
+})(window);
+
+(function(window, undefined){
+    var highlife = function(oldboard, newboard){
+        for (var i = 0; i < oldboard.x; i++){
+            for (var j = 0; j < oldboard.y; j++){
+                var neighbors = oldboard.neighbors(i,j);
+                if (neighbors < 2 || neighbors > 3) {
+                    newboard.kill(i,j);
+                } else if (neighbors == 3 || neighbors == 6) {
+                    newboard.birth(i,j);
+                } else if (neighbors == 2 && oldboard.get(i,j)) {
+                    newboard.birth(i,j);
+                }
+            }
+        }
+    }
+})(window);
