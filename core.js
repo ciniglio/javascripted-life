@@ -21,7 +21,6 @@
             this.set(true);
         },
         clone : function() {
-            debugger;
             var p = new Piece();
             p.alive = this.alive;
             return p;
@@ -33,33 +32,6 @@
         this.x = x;
         this.y = y;
         this.board = newBoard(x,y);
-        this.set = function(x, y, living) {
-            this.board[x][y].set(living);
-        };
-        this.birth = function(x, y) {
-            this.set(x, y, true);
-        };
-        this.kill = function(x, y) {
-            this.set(x, y, false);
-        };
-        this.get = function(x, y) {
-            return this.board[x][y].alive;
-        };
-        this.getPiece = function(x, y) {
-            return this.board[x][y]
-        }
-        this.clone = function() {
-            var board = new this.constructor(this.x, this.y);
-            var b = new Array(this.x);
-            for (var i = 0; i < this.x; i++){
-                b[i] = new Array(this.y)
-                for (var j = 0; j < this.y; j++){
-                   b[i][j] = this.getPiece(i,j).clone();
-                }
-            }
-            board.board = b
-            return board;
-        }
 
         function newBoard(x, y){
             var board = new Array(x);
@@ -72,7 +44,35 @@
             return board;
         };
     }
-
+    Board.prototype = {
+        set : function(x, y, living) {
+            this.board[x][y].set(living);
+        },
+        birth : function(x, y) {
+            this.set(x, y, true);
+        },
+        kill : function(x, y) {
+            this.set(x, y, false);
+        },
+        get : function(x, y) {
+            return this.board[x][y].alive;
+        },
+        getPiece : function(x, y) {
+            return this.board[x][y]
+        },
+        clone : function() {
+            var board = new Board(this.x, this.y);
+            var b = new Array(this.x);
+            for (var i = 0; i < this.x; i++){
+                b[i] = new Array(this.y)
+                for (var j = 0; j < this.y; j++){
+                   b[i][j] = this.getPiece(i,j).clone();
+                }
+            }
+            board.board = b
+            return board;
+        }
+    }
 
     var Tick = function(oldBoard) {
         var newBoard = oldBoard.clone();
@@ -130,7 +130,6 @@
     window.AddDrawer = AddDrawer;
     window.AddInitializer = AddInitializer;
     window.AddRule = AddRule;
-    debugger;
     window.onload = function() {
         Init(400,400);
     };
