@@ -3,7 +3,7 @@
     var deadColor = "rgb(0,0,150)";
     var drawCell = function(context, x, y, living) {
         context.fillStyle = living ? liveColor : deadColor;
-        context.fillRect(2*x,2*y,2,2);
+        context.fillRect(4*x,4*y,4,4);
     };
 
     var drawLiveCell = function(context, x, y) {
@@ -36,3 +36,21 @@
     };
     window.AddInitializer(init);
 })(window, document);
+
+(function(window, undefined){
+    var conway = function(oldboard, newboard){
+        for (var i = 0; i < oldboard.x; i++){
+            for (var j = 0; j < oldboard.y; j++){
+                var neighbors = oldboard.neighbors(i,j);
+                if (neighbors < 2 || neighbors > 3) {
+                    newboard.kill(i,j);
+                } else if (neighbors == 3) {
+                    newboard.birth(i,j);
+                } else if (neighbors == 2 && oldboard.get(i,j)) {
+                    newboard.birth(i,j);
+                }
+            }
+        }
+    }
+    window.AddRule(conway);
+})(window);
