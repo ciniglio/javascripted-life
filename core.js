@@ -1,5 +1,5 @@
 (function(window, document, undefined){
-    // list of plugins
+    // lists of plugins
     var initializers = [];
     var drawers = [];
     var rules = [];
@@ -43,7 +43,8 @@
             }
             return board;
         };
-    }
+    };
+
     Board.prototype = {
         set : function(x, y, living) {
             this.board[x][y].set(living);
@@ -182,19 +183,35 @@
 
     var AddDrawer = function(drawer) {
         drawers.push(drawer);
-    }
+    };
+
+    var ClearDrawers = function() {
+        drawers = [];
+    };
 
     var AddInitializer = function(initializer) {
         initializers.push(initializer);
-    }
+    };
+
+    var ClearInitializers = function() {
+        initializers = [];
+    };
 
     var AddRule = function(rule) {
         rules.push(rule);
-    }
+    };
+
+    var ClearRules = function() {
+        rules = [];
+    };
 
     window.AddDrawer = AddDrawer;
     window.AddInitializer = AddInitializer;
     window.AddRule = AddRule;
+
+    window.ClearDrawers = ClearDrawers;
+    window.ClearInitializers = ClearInitializers;
+    window.ClearRules = ClearRules;
 
     window.onload = function() {
         Init(200,200);
