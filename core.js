@@ -168,7 +168,7 @@
             function() {
                 Run(board);
             },
-            nextTick - Date.now()
+            Math.max(nextTick - Date.now(), 0)
         );
 
     };
