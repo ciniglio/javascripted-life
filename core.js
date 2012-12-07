@@ -3,6 +3,7 @@
     var initializers = [];
     var drawers = [];
     var rules = [];
+    var cellRules = [];
 
     var Piece = function() {
         this.visited = false;
@@ -140,9 +141,23 @@
     }
 
     var Tick = function(oldBoard) {
-        var newBoard = new Board(oldBoard.x, oldBoard.y);//oldBoard.clone();
+        var newBoard = new Board(oldBoard.x, oldBoard.y);
+        // board modifiers
         for (var i = 0; i < rules.length; i++) {
             rules[i].call(undefined, oldBoard, newBoard);
+        }
+        // cell modifiers
+        for (var i = 0; i < oldBoard.x; i++) {
+            for (var j = 0; j < oldBoard.y; j++) {
+                var v = false;
+                for (var k = 0; k < cellRules.length; k++) {
+                    v = v || cellRules[k].call({
+                        neighbors : oldBoard.neighbors(i, j),
+                        alive : oldBoard.get(i, j),
+                    });
+                }
+                v ? newBoard.birth(i,j) : newBoard.kill(i,j);
+            }
         }
         return newBoard;
     }
@@ -205,13 +220,23 @@
         rules = [];
     };
 
+    var AddCellRule = function(rule) {
+        cellRules.push(rule);
+    };
+
+    var ClearCellRules = function() {
+        cellRules = [];
+    };
+
     window.AddDrawer = AddDrawer;
     window.AddInitializer = AddInitializer;
     window.AddRule = AddRule;
+    window.AddCellRule = AddCellRule;
 
     window.ClearDrawers = ClearDrawers;
     window.ClearInitializers = ClearInitializers;
     window.ClearRules = ClearRules;
+    window.ClearCellRules = ClearCellRules;
 
     window.onload = function() {
         Init(200,200);

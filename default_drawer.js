@@ -52,7 +52,19 @@
             }
         }
     }
-    window.AddRule(conway);
+})(window);
+
+(function(window, undefined){
+    var conway = function(){
+        if (this.neighbors < 2 || this.neighbors > 3) {
+            return false;
+        } else if (this.neighbors == 3) {
+            return true;
+        } else if (this.neighbors == 2 && this.alive) {
+            return true;
+        }
+    };
+    window.AddCellRule(conway);
 })(window);
 
 (function (window, undefined){
@@ -68,7 +80,6 @@
             }
         }
     };
-    window.AddRule(seeds);
 })(window);
 
 (function(window, undefined){
