@@ -144,11 +144,13 @@
 
     var Tick = function(oldBoard) {
         var newBoard = new Board(oldBoard.x, oldBoard.y);
+
         // board modifiers
         for (var i = 0; i < rules.length; i++) {
             rules[i].call(undefined, oldBoard, newBoard);
         }
-        // cell modifiers
+
+       // cell modifiers
         for (var i = 0; i < oldBoard.x; i++) {
             for (var j = 0; j < oldBoard.y; j++) {
                 var v = false;
@@ -172,7 +174,7 @@
 
     var Run = function(board) {
         var curtime = Date.now();
-        var nextTick = curtime + 500;
+        var nextTick = curtime + 50;
 
         // update board
         board = Tick(board);
@@ -184,7 +186,7 @@
             function() {
                 Run(board);
             },
-            4
+            Math.max(nextTick - Date.now(), 0)
         );
 
     };
