@@ -5,6 +5,8 @@
     var rules = [];
     var cellRules = [];
 
+    var canvas = document.getElementById("board");
+
     var Piece = function() {
         this.visited = false;
         this.alive = false;
@@ -163,7 +165,6 @@
     }
 
     var Draw = function(board) {
-        var canvas = document.getElementById("board");
         for (var i = 0; i < drawers.length; i++) {
             drawers[i].call(undefined, canvas, board);
         }
@@ -183,7 +184,7 @@
             function() {
                 Run(board);
             },
-            Math.max(nextTick - Date.now(), 0)
+            4
         );
 
     };

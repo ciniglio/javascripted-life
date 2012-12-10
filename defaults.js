@@ -11,11 +11,17 @@
     };
 
     var drawDeadCell = function(context, x, y) {
-        drawCell(context, x, y, false);
+        //drawCell(context, x, y, false);
     };
+
+    var drawDeadBoard = function(context, board) {
+        context.fillStyle = deadColor;
+        context.fillRect(0,0,4*board.x, 4*board.y);
+    }
 
     var draw = function(canvas, board) {
         var c = canvas.getContext('2d');
+        drawDeadBoard(c, board);
         for (var i = 0; i < board.x; i++) {
             for (var j = 0; j < board.y; j++) {
                 board.get(i, j) ? drawLiveCell(c, i, j) : drawDeadCell(c, i, j);
